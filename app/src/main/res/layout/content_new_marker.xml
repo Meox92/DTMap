@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/segnala_nuovo_luogo" />
+
+        <Spinner
+            android:id="@+id/newMarker_spinner_tipologia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time" />
+
+        <CheckBox
+            android:id="@+id/newMarker_cb_orario0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/orario0" />
+
+        <CheckBox
+            android:id="@+id/newMarker_cb_orario1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/orario1" />
+
+        <CheckBox
+            android:id="@+id/newMarker_cb_orario2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/orario2" />
+
+        <CheckBox
+            android:id="@+id/newMarker_cb_orario3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/orario3" />
+
+        <CheckBox
+            android:id="@+id/newMarker_cb_orario4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/orario4" />
+
+        <CheckBox
+            android:id="@+id/newMarker_cb_orario5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/orario5" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/titolo" />
+
+        <EditText
+            android:id="@+id/newMarker_edt_titolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/titolo"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/descrizione" />
+
+        <EditText
+            android:id="@+id/newMarker_edt_descrizione"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/add_description"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/foto" />
+
+        <Button
+            android:id="@+id/newMarker_btn_invia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="@string/invia" />
+    </LinearLayout>
+</ScrollView>

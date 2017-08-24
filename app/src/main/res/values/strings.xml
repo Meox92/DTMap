@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">DegradoTourMap</string>
+    <!--String Botton NavBar-->
+    <string name="title_home">Maps</string>
+    <string name="title_dashboard">Account</string>
+    <string name="title_notifications">Classifica</string>
+    <string name="test">Test</string>
+    <!--********************-->
+
+    <!--DB childs-->
+    <string name="report">Report</string>
+    <!--*************-->
+
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_email_password">EmailPasswordActivity</string>
+    <string name="auth_failed">Authentication failed!</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="new_user">New User?</string>
+    <string name="login">Login</string>
+    <string name="signin">Sign In</string>
+    <string name="email">E-mail</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_activity_new_marker">NewMarkerActivity</string>
+    <string name="segnala_nuovo_luogo">Segnala nuovo luogo di degrado</string>
+    <string name="prostituzione">Prostituzione</string>
+    <string name="spaccio">Spaccio</string>
+    <string name="furti">Furti</string>
+    <string name="vandalismo">Vandalismo</string>
+    <string name="discarica">Discarica abusiva</string>
+    <string name="time">Orario</string>
+    <string name="altro">Altro</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="add_description">Aggiungi una breve descrizione del luogo</string>
+    <string name="invia">Invia</string>
+    <string name="foto">Foto</string>
+    <string name="titolo">Titolo</string>
+    <string name="specifica">Specifica il tipo di degrado da segnalare</string>
+    <string name="title_activity_user_page">UserPageActivity</string>
+    <string name="orario0">00:00 - 4:00</string>
+    <string name="orario1">04:00 - 08:00</string>
+    <string name="orario2">08:00 - 12:00</string>
+    <string name="orario3">12:00 - 16:00</string>
+    <string name="orario4">16:00 - 20:00</string>
+    <string name="orario5">20:00 - 24:00</string>
+    <string name="remember">Remember</string>
+    <string name="select_degrado">Seleziona il tipo di degrado</string>
+    <string name="cerca">Cerca</string>
+    <string name="uomo">Uomo</string>
+    <string name="donna">Donna</string>
+    <string name="citta">Città</string>
+    <string name="data_nascita">Data di Nascita(DDMMYYYY)</string>
+    <string name="salva">Salva</string>
+    <string name="title_activity_change_user_settings">ChangeUserSettingsActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="settings">Change your profile</string>
+</resources>

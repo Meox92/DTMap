@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "590307451581",
+    "firebase_url": "https://degradotourmap.firebaseio.com",
+    "project_id": "degradotourmap",
+    "storage_bucket": "degradotourmap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590307451581:android:df061ece518a3268",
+        "android_client_info": {
+          "package_name": "com.example.maola.degradotourmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590307451581-0969ejt7bct4d9ll1gv132crqmd0qq6l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.maola.degradotourmap",
+            "certificate_hash": "f0f48e5748e80ebf716ece7ea9f8a0a0499bc59a"
+          }
+        },
+        {
+          "client_id": "590307451581-a2t59f63gbloopv9pf82ojqnk78uuoq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACm32bsEUAhcZ3xXBtmP3BSUd63v4OboI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590307451581-a2t59f63gbloopv9pf82ojqnk78uuoq4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

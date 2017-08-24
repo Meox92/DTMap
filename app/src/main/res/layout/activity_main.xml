@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.maola.degradotourmap.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/filtro_txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_degrado" />
+
+            <CheckBox
+                android:id="@+id/filtro_check_prostituzione"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prostituzione" />
+
+            <CheckBox
+                android:id="@+id/filtro_check_spaccio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/spaccio" />
+
+            <CheckBox
+                android:id="@+id/filtro_check_altro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/altro" />
+
+            <CheckBox
+                android:id="@+id/filtro_check_discarica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/discarica" />
+
+            <CheckBox
+                android:id="@+id/filtro_check_furti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/furti" />
+
+            <Button
+                android:id="@+id/filtro_btn_cerca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cerca" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/navigation"/>
+
+</LinearLayout>
