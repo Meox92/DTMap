@@ -10,18 +10,24 @@ public class Report {
 
 
 
-    public String userId, title, description, typology, picture;
+    public String userId;
+    public String title;
+    public String description;
+    public String typology;
+    public String picture;
+
+    public String markerID;
     public Double lat, lng;
     public List<String> time;
     //Data di segnalazione
-    public Long reportingDate;
+    public String reportingDate;
     public List <String> comments;
     public int points;
 
     public Report(){}
 
 
-    public Report(String userId, Double lat, Double lng, String title, String description, String typology, String picture, List<String> time, Long reportingDate, List<String> comments, int points) {
+    public Report(String userId, Double lat, Double lng, String title, String description, String typology, String picture, List<String> time, String reportingDate, List<String> comments, int points, String markerID) {
         this.userId = userId;
         this.lat = lat;
         this.lng = lng;
@@ -33,6 +39,7 @@ public class Report {
         this.reportingDate = reportingDate;
         this.comments = comments;
         this.points = points;
+        this.markerID = markerID;
     }
 
 
@@ -100,11 +107,28 @@ public class Report {
         this.time = time;
     }
 
+    public String getReportingDate() {
+        return reportingDate;
+    }
+
+    public void setReportingDate(String reportingDate) {
+        this.reportingDate = reportingDate;
+    }
+
+
     public int getPoints() {
         return points;
     }
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public String getMarkerID() {
+        return markerID;
+    }
+
+    public void setMarkerID(String markerID) {
+        this.markerID = markerID;
     }
 }

@@ -11,7 +11,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/newMarker_txt_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Indirizzo"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView"
@@ -106,6 +116,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/foto" />
+
+        <Button
+            android:id="@+id/newMarker_btn_sfoglia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sfoglia" />
+
+        <TextView
+            android:id="@+id/newMarker_txt_pic1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/com_facebook_close"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/newMarker_img_pic1"
+            android:layout_width="65dp"
+            android:layout_height="86dp"
+            android:visibility="gone"
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
         <Button
             android:id="@+id/newMarker_btn_invia"

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.signature.StringSignature;
 import com.example.maola.degradotourmap.R;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -69,7 +71,8 @@ public class UserSettingsPageActivity extends AppCompatActivity {
     private Uri selectedImage;
     private StorageReference mStorageRef;
     private StorageReference riversRef;
-    int counter;
+    private String creationDate;
+    private StorageMetadata metadata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class UserSettingsPageActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
 
         /*-----------------USER INSTANCE----------------------*/
         //get firebase auth instance
@@ -107,31 +112,34 @@ public class UserSettingsPageActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         //Child references to storage
         riversRef = mStorageRef.child("images/"+user.getUid()+ "/profile");
+        /*-------------------------------------------------*/
 
 
 
-        Log.i("PROVA", "Token " + user.getToken(true) +
-                "ID: " + user.getUid() +
-                " Email: " + user.getEmail() +
-                " Name : " + user.getDisplayName() +
-                " Photo: " + user.getPhotoUrl());
+        /*----Get signature for profile picture---*/
+//
+        creationDate = "";
 
-
-        //Show photo picture if it exists
-        mStorageRef.child("images/"+user.getUid()+ "/profile").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(UserSettingsPageActivity.this)
-                        .using(new FirebaseImageLoader())
-                        .load(riversRef)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .into(userpageImgFoto);
+            public void onSuccess(StorageMetadata storageMetadata) {
+                // Metadata now contains the metadata for 'images/forest.jpg'
+                creationDate = Long.toString(storageMetadata.getCreationTimeMillis());
+                //Show photo picture if it exists
+                mStorageRef.child("images/" + user.getUid() + "/profile").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(UserSettingsPageActivity.this)
+                                .using(new FirebaseImageLoader())
+                                .load(riversRef)
+                                .signature(new StringSignature(creationDate))
+                                .into(userpageImgFoto);
+                    }
+                });
+            }
+        });
 
-            }});
-
-
-
+        /*----Click on profile picture allows to change it---*/
         userpageImgFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +147,15 @@ public class UserSettingsPageActivity extends AppCompatActivity {
 
             }});
 
+        userpageEdtUsername.setText(user.getDisplayName());
+        userpageTxtUsernameProfilo.setText(user.getDisplayName());
+
+
+        Log.i("PROVA", "Token " + user.getToken(true) +
+                "ID: " + user.getUid() +
+                " Email: " + user.getEmail() +
+                " Name : " + user.getDisplayName() +
+                " Photo: " + user.getPhotoUrl());
     }
 
 
@@ -167,10 +184,12 @@ public class UserSettingsPageActivity extends AppCompatActivity {
     private void uploadFile() {
         //if there is a file to upload
         if (selectedImage != null) {
+
             //displaying a progress dialog while upload is going on
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading");
             progressDialog.show();
+
 
             riversRef.putFile(selectedImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -193,16 +212,7 @@ public class UserSettingsPageActivity extends AppCompatActivity {
                                         }
                                     });
 
-                            Glide.with(UserSettingsPageActivity.this)
-                                    .using(new FirebaseImageLoader())
-                                    .load(riversRef)
-                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                    .skipMemoryCache(true)
-                                    .into(userpageImgFoto );
-
-
                             progressDialog.dismiss();
-
                             //and displaying a success toast
                             Toast.makeText(getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
                         }
@@ -235,8 +245,6 @@ public class UserSettingsPageActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
@@ -246,16 +254,39 @@ public class UserSettingsPageActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK){
                     selectedImage = imageReturnedIntent.getData();
                     uploadFile();
+                    userpageImgFoto.setImageURI(selectedImage);
+// ------------------- Questa parte di codice non funziona perchè creationDate non viene aggiornato immediatamente
+//                    riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+//                        @Override
+//                        public void onSuccess(StorageMetadata storageMetadata) {
+//                            // Metadata now contains the metadata for 'images/forest.jpg'
+//                            creationDate = Long.toString(storageMetadata.getUpdatedTimeMillis());
+//                        }
+//                    });
+//
+//                    Glide.with(UserSettingsPageActivity.this)
+//                            .using(new FirebaseImageLoader())
+//                            .load(riversRef)
+//                            .signature(new StringSignature(creationDate))
+//                            .into(userpageImgFoto );
                 }
 
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent i = new Intent(UserSettingsPageActivity.this, UserPageActivity.class);
+        setResult(1, i);
+        finish();
+        super.onBackPressed();
+
     }
 
 
 
     @OnClick(R.id.usperpage_btn_salva)
     public void onViewClicked() {
-
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(userpageEdtUsername.getText().toString())
@@ -271,6 +302,10 @@ public class UserSettingsPageActivity extends AppCompatActivity {
 
                     }
                 });
+
+
+        userpageTxtUsernameProfilo.setText(user.getDisplayName());
+
 
     }
 }

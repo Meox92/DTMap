@@ -9,15 +9,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.StringSignature;
 import com.example.maola.degradotourmap.R;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import butterknife.BindView;
@@ -35,8 +39,8 @@ public class UserPageActivity extends AppCompatActivity {
     TextView mainUserPageTxtEmail;
     @BindView(R.id.main_user_page_txt_change)
     TextView mainUserPageTxtChange;
-    @BindView(R.id.imageView2)
-    ImageView imageView2;
+//    @BindView(R.id.imageView2)
+//    ImageView imageView2;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -45,6 +49,7 @@ public class UserPageActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private StorageReference riversRef;
     private int REQUEST_CODE = 1;
+    private String creationDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,37 +81,42 @@ public class UserPageActivity extends AppCompatActivity {
         //Child references to storage
         riversRef = mStorageRef.child("images/" + user.getUid() + "/profile");
 
+        setProfileImage();
 
-        Log.i(TAG, "Token " + user.getToken(true) +
-                "ID: " + user.getUid() +
-                " Email: " + user.getEmail() +
-                " Name : " + user.getDisplayName() +
-                " Photo: " + user.getPhotoUrl());
-
-        //Show photo picture if it exists
-        mStorageRef.child("images/" + user.getUid() + "/profile").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(UserPageActivity.this)
-                        .using(new FirebaseImageLoader())
-                        .load(riversRef)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .into(profileImage);
-
-            }
-        });
-
-//        Glide.with(UserPageActivity.this)
-//                .using(new FirebaseImageLoader())
-//                .load(riversRef)
-//                .into(imageView2);
 
         mainUserPageTxtUsername.setText(user.getDisplayName());
         mainUserPageTxtEmail.setText(user.getEmail());
 
-        imageView2.setImageURI(user.getPhotoUrl());
+//        imageView2.setImageURI(user.getPhotoUrl());
 
+    }
+
+    public void setProfileImage(){
+        creationDate = "";
+        riversRef.getMetadata().
+                addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                    @Override
+                    public void onSuccess(StorageMetadata storageMetadata) {
+                        // Metadata now contains the metadata for 'profile picture
+                        creationDate = Long.toString(storageMetadata.getCreationTimeMillis());
+                        //Show photo picture if it exists
+                        mStorageRef.child("images/" + user.getUid() + "/profile").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(UserPageActivity.this)
+                                        .using(new FirebaseImageLoader())
+                                        .load(riversRef)
+                                        .signature(new StringSignature(creationDate))
+                                        .into(profileImage);
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("Exception metadata", String.valueOf(e));
+            }
+        });
     }
 
     @Override
@@ -123,14 +133,17 @@ public class UserPageActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
         switch (requestCode) {
             case 1:
-                if (resultCode == RESULT_OK) {
-
+                if (resultCode == 1) {
+                    setProfileImage();
+                    Toast.makeText(UserPageActivity.this, "Pressed on Back, changed not saved", Toast.LENGTH_LONG).show();
                 }
 
         }

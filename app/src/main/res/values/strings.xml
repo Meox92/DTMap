@@ -34,7 +34,7 @@
     <string name="descrizione">Descrizione</string>
     <string name="add_description">Aggiungi una breve descrizione del luogo</string>
     <string name="invia">Invia</string>
-    <string name="foto">Foto</string>
+    <string name="foto">Foto(max 3)</string>
     <string name="titolo">Titolo</string>
     <string name="specifica">Specifica il tipo di degrado da segnalare</string>
     <string name="title_activity_user_page">UserPageActivity</string>
@@ -55,4 +55,9 @@
     <string name="title_activity_change_user_settings">ChangeUserSettingsActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="settings">Change your profile</string>
+    <string name="my_report">My report</string>
+    <string name="my_comments">My comments</string>
+    <string name="account_settings">Account settings</string>
+    <string name="sfoglia">Sfoglia</string>
+    <string name="title_activity_report_detail">ReportDetailActivity</string>
 </resources>
