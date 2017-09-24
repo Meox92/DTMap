@@ -60,4 +60,12 @@
     <string name="account_settings">Account settings</string>
     <string name="sfoglia">Sfoglia</string>
     <string name="title_activity_report_detail">ReportDetailActivity</string>
+    <string name="data_segnalazione">Data segnalazione</string>
+    <string name="title">Title</string>
+    <string name="delete">Delete</string>
+    <string name="points">Punteggio</string>
+    <string name="commenti">Commenti</string>
+    <string name="pointvalue">+1</string>
+    <string name="pubblica">publish</string>
+    <string name="substract">-1</string>
 </resources>

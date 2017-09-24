@@ -20,6 +20,7 @@ package com.example.maola.degradotourmap;
 import com.example.maola.degradotourmap.MapUtils.NewMarkerActivity;
 import com.example.maola.degradotourmap.MapUtils.ReportDetailActivity;
 import com.example.maola.degradotourmap.Model.Report;
+import com.example.maola.degradotourmap.Utility.FirebaseUtils;
 import com.example.maola.degradotourmap.Utility.PermissionUtils;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -109,8 +110,9 @@ public class MapsActivity extends AppCompatActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(getResources().getString(R.string.report));
+        myRef = FirebaseUtils.getReportRef();
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        myRef = database.getReference(getResources().getString(R.string.report));
 
         //TODO permette di fare la query nel db
         Query query = myRef.child("Report").orderByChild("userId").equalTo("user1");

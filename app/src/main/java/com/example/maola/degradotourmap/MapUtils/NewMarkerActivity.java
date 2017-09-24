@@ -28,6 +28,7 @@ import com.example.maola.degradotourmap.MapsActivity;
 import com.example.maola.degradotourmap.Model.Report;
 import com.example.maola.degradotourmap.R;
 import com.example.maola.degradotourmap.User.LoginActivity;
+import com.example.maola.degradotourmap.Utility.FirebaseUtils;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -145,8 +146,9 @@ public class NewMarkerActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         /*-------------------------------------------------*/
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(getString(R.string.report));
+        myRef = FirebaseUtils.getReportRef();
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        myRef = database.getReference(getString(R.string.report));
         markerID = myRef.push().getKey();
         riversRef = mStorageRef.child("images/" + user.getUid() + "/" + markerID + "/reportpicture1");
         /*-------------------------------------------------*/
