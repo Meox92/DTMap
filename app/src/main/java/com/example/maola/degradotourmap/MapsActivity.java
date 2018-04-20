@@ -47,6 +47,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -98,6 +99,7 @@ public class MapsActivity extends AppCompatActivity
     private Marker markerID;
     private HashMap<String, Object> result;
     private List<String> markerIdList;
+    private float MAP_ZOOM = 16.0f;
 
 
 
@@ -151,6 +153,7 @@ public class MapsActivity extends AppCompatActivity
 
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
+        mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -171,6 +174,18 @@ public class MapsActivity extends AppCompatActivity
         });
 
     }
+
+
+
+    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+            if (mMap != null) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+            }
+        }
+    };
 
     public void reportListener(){
         lSegnalazioni = new ArrayList<Report>();
@@ -263,6 +278,8 @@ public class MapsActivity extends AppCompatActivity
 
         return mRenderedMarker;
     }
+
+
 
 
 

@@ -68,4 +68,7 @@
     <string name="pointvalue">+1</string>
     <string name="pubblica">publish</string>
     <string name="substract">-1</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

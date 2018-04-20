@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+//    buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.example.maola.degradotourmap"
         minSdkVersion 16
@@ -19,6 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -40,16 +41,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.0'
     compile 'com.google.firebase:firebase-storage:10.2.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.0'
 }
-
-
-
-
-
-
-
 
 
 

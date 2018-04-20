@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.maola.degradotourmap.Model.Comment;
+import com.example.maola.degradotourmap.User.CommentFragment;
 import com.example.maola.degradotourmap.Model.Report;
 import com.example.maola.degradotourmap.R;
 import com.example.maola.degradotourmap.User.LoginActivity;
@@ -28,10 +31,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ReportDetailActivity extends AppCompatActivity {
+public class ReportDetailActivity extends AppCompatActivity implements CommentFragment.OnCommentFragmentInteractionListener {
     @BindView(R.id.reportdetail_txt_points)
     TextView reportdetailTxtPoints;
     @BindView(R.id.reportdetail_txt_comments)
@@ -71,6 +75,7 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     private String TAG = "ReportDetailActivity";
     private DatabaseReference myRef;
+    private DatabaseReference myCommentDbRef;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
@@ -107,6 +112,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         });
 
         myRef = FirebaseUtils.getReportRef();
+        myCommentDbRef = FirebaseUtils.getCommentsRef();
 
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        myRef = database.getReference(getResources().getString(R.string.report));
@@ -167,8 +173,22 @@ public class ReportDetailActivity extends AppCompatActivity {
         /*---------------------------------------*/
 
         getReportInfo();
+        initializeCommentFragment();
 
 
+    }
+
+    public void initializeCommentFragment(){
+        // Create an instance of ExampleFragment
+        CommentFragment firstFragment = new CommentFragment();
+
+        // In case this activity was started with special instructions from an Intent,
+        // pass the Intent's extras to the fragment as arguments
+        firstFragment.setArguments(getIntent().getExtras());
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.commentfragmentlayout, firstFragment).commit();
     }
 
 
@@ -271,19 +291,19 @@ public class ReportDetailActivity extends AppCompatActivity {
     public void downVote(ImageButton button){
         oldPoint = report.getPoints();
 
-            int newPoint = oldPoint - 1;
+        int newPoint = oldPoint - 1;
 
-            setImageVote(button, R.drawable.dislikeyes);
-            setRated("ratedNegative",true);
+        setImageVote(button, R.drawable.dislikeyes);
+        setRated("ratedNegative",true);
 
-            myRef.child(idReport).child("points").setValue(newPoint);
+        myRef.child(idReport).child("points").setValue(newPoint);
 
-            reportDetailImgbtnDownvote.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    annullaVotoNegativo(reportDetailImgbtnDownvote, R.drawable.dislikeno);
-                }
-            });
+        reportDetailImgbtnDownvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                annullaVotoNegativo(reportDetailImgbtnDownvote, R.drawable.dislikeno);
+            }
+        });
     }
 
     public void setImageVote(ImageButton button, int draw){
@@ -326,6 +346,12 @@ public class ReportDetailActivity extends AppCompatActivity {
         setRated("ratedNegative", false);
     }
 
+    public void commentQuery(DatabaseReference databaseReference, String fieldName, String keyword){
+        Query query = databaseReference.orderByChild(fieldName).equalTo(keyword);
+        //        Query query = myRef.child("Report").orderByChild("userId").equalTo("user1");
+
+    }
+
     @OnClick({R.id.reportDetail_imgbtn_upvote, R.id.reportDetail_imgbtn_downvote, R.id.reportdetail_btn_publishcomment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -340,5 +366,32 @@ public class ReportDetailActivity extends AppCompatActivity {
             case R.id.reportdetail_btn_publishcomment:
                 break;
         }
+    }
+
+
+
+    @Override
+    public void onFragmentInteraction(String commentText) {
+//        CommentFragment newFragment = new CommentFragment();
+//        Bundle args = new Bundle();
+//        //pass the Report id to comment fragment
+//        args.putString("varIdMarker", "aaaa");
+//
+//        newFragment.setArguments(args);
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//        // Replace whatever is in the fragment_container view with this fragment,
+//        // and add the transaction to the back stack so the user can navigate back
+//        transaction.replace(R.id.commentfragmentlayout, newFragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+
+
+        Date currentTime = Calendar.getInstance().getTime();
+
+        Comment comment = new Comment(idReport, user.getEmail(), commentText, currentTime.toString());
+
+        String commentID = myCommentDbRef.push().getKey();
+        myCommentDbRef.child(commentID).setValue(comment);
     }
 }

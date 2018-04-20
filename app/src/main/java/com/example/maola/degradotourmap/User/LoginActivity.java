@@ -1,5 +1,6 @@
 package com.example.maola.degradotourmap.User;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox loginCbRemember;
     private SharedPreferences sharedPreferences;
     private String SHARED_PREF = "PREF_LOGIN";
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -124,15 +127,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password){
+        progressDialog = ProgressDialog.show(LoginActivity.this, "Login in progress",
+                "", true);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 //                        Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_SHORT).show();
+
                         if(task.isSuccessful()){
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(i);
+                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(i);
                         }
 
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -142,7 +148,10 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+
                         }
+                        progressDialog.dismiss();
+
                     }
                 });
     }
